@@ -51,18 +51,15 @@ def convertSize(n, format='%(value).1f %(symbol)s', symbols='customary'):
     return format % dict(symbol=symbols[0], value=n)
 
 def download(fileurl,file_name):
-    ##Initiate download
     u = urllib2.urlopen(fileurl)
     f = open(file_name, 'wb')
     meta = u.info()
     file_size = int(meta.getheaders("Content-Length")[0])
     print "Downloading %s (%s)" %(file_name, convertSize(file_size))
      
-    #Calculate downloaded filesize
     file_size_dl = 0
     block_size = 8192
      
-    #Download loop
     while True:
         buffer = u.read(block_size)
         if not buffer:
@@ -75,8 +72,7 @@ def download(fileurl,file_name):
         #print status
         sys.stdout.write("\r        %s" % status)
         sys.stdout.flush()
-     
-    #Download done. Close file stream
+        
     f.close()
 
 if __name__ == '__main__':
