@@ -82,7 +82,7 @@ if __name__ == '__main__':
 		num = raw_input("How many results do you want to retrieve ?   ")
 		print ""
 		results = search(query,num)
-		songId = raw_input('\nWhich song so you want to download ?   ')
+		songId = raw_input('\nWhich song do you want to download ?   ')
 		url = results[int(songId)]['url']
 		title = results[int(songId)]['title']
 		music = urllib2.urlopen(url)
