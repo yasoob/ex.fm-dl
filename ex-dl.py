@@ -72,7 +72,7 @@ def download(fileurl,file_name):
         #print status
         sys.stdout.write("\r        %s" % status)
         sys.stdout.flush()
-        
+    sys.stdout.write("\n")        
     f.close()
 
 if __name__ == '__main__':
