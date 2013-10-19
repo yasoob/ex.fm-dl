@@ -2,8 +2,8 @@ import urllib2
 import json
 import sys
 import logging
-
-logging.basicConfig(format = "%(message)s", level=logging.INFO)
+import argparse
+import platform
 
 
 class Ex_fm(object):
@@ -45,7 +45,7 @@ class Ex_fm(object):
             else:
                 logging.info(str(count) + ".  " + result[count]['title'])
             count += 1
-        logging.debug("Result == "+str(result))
+        logging.debug("Result == "+str(len(result)))
         return result
 
     def convertSize(self, n, format='%(value).1f %(symbol)s', symbols='customary'):
@@ -108,15 +108,25 @@ class Ex_fm(object):
         self.download(url, title + ".mp3")
         logging.info("Download completed\n")
 
+
 def main():
     try:
+        parser = argparse.ArgumentParser(description="Ex.fm song downloader made by M.Yasoob <yasoob.khld@gmail.com>")
+        parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
+        parser.add_argument("-n", "--number", help = "Specify the number of results to retrieve", default=20)
+        parser.add_argument("query", help = "the name of the song or artist to search for")
+        args = parser.parse_args()
+        if args.verbose:
+            logging.basicConfig(format = "%(message)s", level=logging.DEBUG)
+        else:
+            logging.basicConfig(format = "%(message)s", level=logging.INFO)
+        logging.debug("Arguments == "+str(args))
+        logging.debug("Platform == %s" %(platform.platform()))
+        logging.debug("Python version == %s" %(platform.python_version()))
         logging.info("Ex.fm song downloader made by M.Yasoob <yasoob.khld@gmail.com>")
-        query = raw_input("Which song or artist do you want to search for?   ")
-        num = raw_input("How many results do you want to retrieve ?   ")
-        Ex_fm(query, num)
+        Ex_fm(args.query, args.number)
     except KeyboardInterrupt:
-        logging.info("\nProgram was closed by the user\n")
-        sys.exit()
+        sys.exit("\nProgram was closed by the user\n")
 
 if __name__ == '__main__':
     main()
